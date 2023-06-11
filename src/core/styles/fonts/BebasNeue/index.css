@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'BebasNeue-Bold';
+  src: url('BebasNeue-Bold.eot');
+  src: url('BebasNeue-Bold.eot?#iefix') format('embedded-opentype'),
+    url('BebasNeue-Bold.woff2') format('woff2'), url('BebasNeue-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BebasNeue-Light';
+  src: url('BebasNeue-Light.eot');
+  src: url('BebasNeue-Light.eot?#iefix') format('embedded-opentype'),
+    url('BebasNeue-Light.woff2') format('woff2'), url('BebasNeue-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BebasNeue-Book';
+  src: url('BebasNeue-Book.eot');
+  src: url('BebasNeue-Book.eot?#iefix') format('embedded-opentype'),
+    url('BebasNeue-Book.woff2') format('woff2'), url('BebasNeue-Book.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BebasNeue-Regular';
+  src: url('BebasNeue-Regular.eot');
+  src: url('BebasNeue-Regular.eot?#iefix') format('embedded-opentype'),
+    url('BebasNeue-Regular.woff2') format('woff2'), url('BebasNeue-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BebasNeue-Thin';
+  src: url('BebasNeue-Thin.eot');
+  src: url('BebasNeue-Thin.eot?#iefix') format('embedded-opentype'),
+    url('BebasNeue-Thin.woff2') format('woff2'), url('BebasNeue-Thin.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

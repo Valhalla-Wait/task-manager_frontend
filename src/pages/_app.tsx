@@ -1,16 +1,22 @@
-import { wrapper } from '@/store/rootReducer'
-import '@/shared/styles/globals.css'
-import type { AppProps } from 'next/app'
-import {Provider} from 'react-redux'
+import React from 'react';
+import { wrapper } from 'core';
+import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+import 'core/styles/index.css';
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from 'core';
 
-const App = ({Component, ...rest}:AppProps) => {
-  const {store, props} = wrapper.useWrappedStore(rest);
-  const {pageProps} = props
+const App = ({ Component, ...rest }: AppProps) => {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <ApolloProvider client={apolloClient}>
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
+    </ApolloProvider>
+
   );
 };
 
-export default App
+export default App;

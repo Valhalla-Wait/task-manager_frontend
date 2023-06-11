@@ -1,0 +1,20 @@
+:root {
+  /* DARK THEME */
+  --color-dark-dark: #25274d;
+  --color-dark-grey200: #464866;
+  --color-dark-grey100: #aaabb8;
+  --color-dark-sky: #2e9cca;
+  --color-dark-blue: #29648a;
+
+  /* LIGHT THEME */
+  --color-light-blue: #5680e9;
+  --color-light-aqua: #84ceeb;
+  --color-light-sky: #5ab9ea;
+  --color-light-grey: #c1c8e4;
+  --color-light-purple: #8860d0;
+
+  /* FONTS */
+  --h3-font: 'BebasNeue-Bold';
+  --title-font: 'Montserrat-Medium';
+  --text-font: 'Montserrat-Regular';
+}

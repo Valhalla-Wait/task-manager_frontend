@@ -1,22 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './../shared/styles/signIn.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { useAppDispatch, useAppSelector } from '@/store/rootReducer'
-import { useState } from 'react'
-import { signInSlice } from '@/store/slice/SignIn/slice'
-import { setSignInDataAction } from '@/store/slice/SignIn/actions'
-import { signInSelector } from '@/store/slice/SignIn/selectors'
+import Head from 'next/head';
+import styles from './../shared/styles/signIn.module.scss';
+import { useState } from 'react';
+import { SignInActions, SignInSelectors, useAppDispatch, useAppSelector } from 'core';
+import { useQuery } from '@apollo/client';
+import { FETCH_AUTH } from 'core/store/slice/Auth/queries';
 
 export default function Home() {
-  const userEmail = useAppSelector(signInSelector)
-  const dispatch = useAppDispatch()
+  const userEmail = useAppSelector(SignInSelectors.signInEmailSelector);
+  const dispatch = useAppDispatch();
+
+  const { data, loading, error } = useQuery(FETCH_AUTH);
+  console.log(data)
 
   const [inputData, setInputData] = useState({
     email: '',
-    password: ''
-  })
+    password: '',
+  });
 
   return (
     <>
@@ -29,42 +28,62 @@ export default function Home() {
       <main>
         <div className={styles.signIn_wrapper}>
           <div className={styles.signIn_form}>
-            {userEmail ?
+            {userEmail ? (
               <div>
                 Hello, {userEmail}!
                 <br />
-                <button onClick={() => {
-                  dispatch(signInSlice.actions.removeSignInDataAction())
-                }}>Log out</button>
+                <button
+                  onClick={() => {
+                    dispatch(SignInActions.removeSignInDataAction());
+                  }}
+                >
+                  Log out
+                </button>
               </div>
-              :
+            ) : (
               <>
-              
                 <h2>Sign In</h2>
+                
+                <input
+                  className={styles.signIn_form__input}
+                  value={inputData.email}
+                  onChange={(e) =>
+                    setInputData((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
+                  type="text"
+                />
 
-                <input className={styles.signIn_form__input} value={inputData.email} onChange={(e) => setInputData(prev => ({
-                  ...prev,
-                  email: e.target.value
-                }))} type="text" />
+                <input
+                  className={styles.signIn_form__input}
+                  value={inputData.password}
+                  onChange={(e) =>
+                    setInputData((prev) => ({
+                      ...prev,
+                      password: e.target.value,
+                    }))
+                  }
+                  type="password"
+                />
 
-                <input className={styles.signIn_form__input} value={inputData.password} onChange={(e) => setInputData(prev => ({
-                  ...prev,
-                  password: e.target.value
-                }))} type="password" />
-
-                <button onClick={() => {
-                  dispatch(signInSlice.actions.setSignInDataAction( inputData))
-                  setInputData({
-                    email: '',
-                    password: ''
-                  })
-                }}>SignIn</button>
+                <button
+                  onClick={() => {
+                    dispatch(SignInActions.setSignInDataAction(inputData));
+                    setInputData({
+                      email: '',
+                      password: '',
+                    });
+                  }}
+                >
+                  SignIn
+                </button>
               </>
-            }
-
+            )}
           </div>
         </div>
       </main>
     </>
-  )
+  );
 }

@@ -1,26 +1,25 @@
 .signIn_wrapper {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .signIn_form {
-    width: 300px;
-    background-color: aliceblue;
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    border-radius: 20px;
+  width: 300px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  &__input {
+    height: 30px;
+    width: 100%;
     text-align: center;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    &__input {
-        height: 30px;
-        width: 100%;
-        text-align: center;
-    }
-
+  }
 }
