@@ -1,0 +1,2 @@
+schema: 'http://localhost:5000/graphql'
+documents: 'src/core/api/generated_types.ts'

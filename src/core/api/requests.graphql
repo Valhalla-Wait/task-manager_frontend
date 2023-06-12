@@ -1,0 +1,42 @@
+######## AUTH ########
+mutation Login($email: String!, $password: String!) {
+    login(loginInput:{
+        email: $email,
+        password: $password
+    }){
+            user{
+                id
+            firstName
+            lastName
+            email
+            }
+            accessToken
+        }
+    }
+mutation Registration($firstName: String!, $lastName: String!,$email: String!,$password: String!){
+    registration(registrationUserInput: {
+        firstName: $firstName,
+        lastName: $lastName,
+        email: $email,
+        password: $password
+    }){
+        user{
+            id
+            email
+            firstName
+            lastName
+        }
+        accessToken
+    }
+}
+
+
+######## USERS ########
+query GetUsers {
+    usersList{
+            id
+            firstName
+            lastName
+            email
+        }
+    }

@@ -2,20 +2,45 @@ import Head from 'next/head';
 import styles from './../shared/styles/signIn.module.scss';
 import { useState } from 'react';
 import { SignInActions, SignInSelectors, useAppDispatch, useAppSelector } from 'core';
-import { useQuery } from '@apollo/client';
-import { FETCH_AUTH } from 'core/store/slice/Auth/queries';
+import { useLazyGetUsersQuery } from 'core/api/generated_types';
+import { authApi } from 'core/store/slice/Auth/api';
 
 export default function Home() {
   const userEmail = useAppSelector(SignInSelectors.signInEmailSelector);
   const dispatch = useAppDispatch();
 
-  const { data, loading, error } = useQuery(FETCH_AUTH);
-  console.log(data)
+  // const { data, loading, error } = useQuery(FETCH_AUTH);
+
+
+  // const [createUser, {}] = userApi.useRegMutation()
+  const [fetch, data] = useLazyGetUsersQuery()
+  const [login] = authApi.useLoginMutation()
+  const [reg] = authApi.useRegistrationMutation()
 
   const [inputData, setInputData] = useState({
     email: '',
     password: '',
   });
+
+  const handler = async () => {
+    try {
+      await login({email: "ssss@yandex.ru",
+      password: "123456"})
+    } catch (error) {
+      
+    }
+      
+  }
+
+  const regHandler = async () => {
+    try {
+      await reg({email: "huhu@yandex.ru",
+      password: "123456", firstName: "Hahah", lastName: "hehe"})
+    } catch (error) {
+      
+    }
+      
+  }
 
   return (
     <>
@@ -69,15 +94,21 @@ export default function Home() {
                 />
 
                 <button
-                  onClick={() => {
-                    dispatch(SignInActions.setSignInDataAction(inputData));
-                    setInputData({
-                      email: '',
-                      password: '',
-                    });
-                  }}
+                  onClick={handler}
                 >
                   SignIn
+                </button>
+                <button
+                  onClick={async() => {
+                    await fetch()
+                  }}
+                >
+                  data
+                </button>
+                <button
+                  onClick={regHandler}
+                >
+                  REg
                 </button>
               </>
             )}
