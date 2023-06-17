@@ -7,15 +7,16 @@ import { signInSlice } from './slice/SignIn/slice';
 
 const rootReducer = combineReducers({
   [signInSlice.name]: signInSlice.reducer,
-  [api.reducerPath]: api.reducer
+  [api.reducerPath]: api.reducer,
 });
 
 // create a makeStore function
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    // serializableCheck: false
-  }).concat(api.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      // serializableCheck: false
+    }).concat(api.middleware),
 });
 
 const makeStore = () => store;

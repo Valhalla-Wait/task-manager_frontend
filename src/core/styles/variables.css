@@ -18,3 +18,19 @@
   --title-font: 'Montserrat-Medium';
   --text-font: 'Montserrat-Regular';
 }
+
+/* :root[data-theme="dark"] {
+  --color5: #464866;
+  --color1: #25274d;
+  --color2: #aaabb8;
+  --color3: #2e9cca;
+  --color4: #29648a;
+} */
+
+/* :root[data-theme="light"] {
+  --color1: #5ab9ea;
+  --color2: #c1c8e4;
+  --color3: #8860d0;
+  --color4: #29648a;
+  --color5: #84ceeb;
+} */

@@ -9,7 +9,11 @@ export const setSignInDataAction = (
     };
     type: string;
   },
-) => ({ ...state, email: action.payload.email, password: action.payload.password });
+) => ({
+  ...state,
+  email: action.payload.email,
+  password: action.payload.password,
+});
 
 export const removeSignInDataAction = (state: ReducerType) => ({
   ...state,
