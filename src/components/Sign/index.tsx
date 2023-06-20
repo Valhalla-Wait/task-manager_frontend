@@ -1,7 +1,8 @@
 import { Button, Form } from 'antd';
 import { CreateUserInput, LoginInput } from 'core/api/generated_types';
+import { AuthContext } from 'core/providers/AuthProvider';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './sign.module.scss';
 import { SignInInputs } from './SignInForm';
 import { SignUpInputs } from './SignUpForm';
@@ -36,6 +37,7 @@ export const Sign = () => {
   //     } catch (error) { }
   // };
 
+  const {setUser} = useContext(AuthContext)
   const { push } = useRouter();
   const [signType, setSignType] = useState<SignType>('Sign In');
   const [error, setError] = useState<null | 'Uncorrect email or password'>(
@@ -49,6 +51,15 @@ export const Sign = () => {
     if (signType === 'Sign In') {
       if (signData.email === 't@t.ru' && signData.password === '123456') {
         setError(null);
+        setUser({
+            id: '1',
+            firstName: 'Mikhail',
+            lastName: 'Zaycev',
+            email: signData.email,
+            password: signData.password,
+            isActivated: true,
+            activationLink: 'sdfsdf'
+        })
         push('/');
       } else {
         setError('Uncorrect email or password');

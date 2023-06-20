@@ -13,8 +13,12 @@
   --color-light-grey: #c1c8e4;
   --color-light-purple: #8860d0;
 
+  /* COMMMON COLORS */
+  --border-color: #e2e2ea;
+  --hover-color: #f7f7f7;
+
   /* FONTS */
-  --h3-font: 'BebasNeue-Bold';
+  --bebas: 'BebasNeue-Bold';
   --title-font: 'Montserrat-Medium';
   --text-font: 'Montserrat-Regular';
 }

@@ -1,3 +1,4 @@
+import { User } from 'core/api/generated_types';
 import { useRouter } from 'next/router';
 import React, {
   createContext,
@@ -6,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { AuthContextType, UserType } from 'shared/types/auth/authContext';
+import { AuthContextType } from 'shared/types/auth/authContext';
 import { ComponentWithAuthFields } from 'shared/types/auth/authPage';
 
 export const AuthContext = createContext<AuthContextType>({
@@ -18,7 +19,7 @@ export const AuthProvider: FC<PropsWithChildren<ComponentWithAuthFields>> = ({
   children,
   Component: { isOnlyAuth },
 }) => {
-  const [user, setUser] = useState<UserType>(null);
+  const [user, setUser] = useState<User|null>(null);
   const { replace } = useRouter();
   useEffect(() => {
     if (isOnlyAuth && !user) replace('/auth');

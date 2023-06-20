@@ -1,9 +1,6 @@
-export type AuthContextType = {
-  user: UserType;
-  setUser: (user: UserType) => void;
-};
+import { User } from "core/api/generated_types";
 
-export type UserType = {
-  name: string;
-  surname: string;
-} | null;
+export type AuthContextType = {
+  user: User | null;
+  setUser: (user: User | null) => void;
+};

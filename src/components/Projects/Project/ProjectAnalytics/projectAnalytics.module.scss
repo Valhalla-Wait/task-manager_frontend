@@ -1,0 +1,19 @@
+.wrapper {
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    gap: 30px;
+}
+
+.chart {
+    max-width: 900px !important;
+    width: 100% !important;
+    height: 300px !important;
+   
+}
+
+.tasksAn, .usersAn, .projectAn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow:  5px 5px 15px rgba(0,0,0,.12);
+}

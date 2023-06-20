@@ -1,10 +1,11 @@
 import { NextPageAuth } from 'shared/types/auth/authPage';
 import { MainLayout } from 'components/layouts/mainLayout';
+import { Projects } from 'components/Projects';
 
 const ProjectsPage: NextPageAuth = () => {
   return (
     <MainLayout>
-      <div>Projects</div>
+      <Projects />
     </MainLayout>
   );
 };

@@ -1,0 +1,36 @@
+.wrapper {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px
+}
+.header{
+    max-height: 130px;
+    height: 100%;
+    background-color: var(--color-light-sky);
+    display: flex;
+    align-items: center;
+    min-height: 80px;
+}
+
+.header, .listWrapper{
+    padding: 0 250px 0 250px;
+}
+
+.title {
+    font-size: 48px;
+    font-family: var(--bebas);
+}
+
+.listWrapper {
+   display: flex;
+   align-items: center;
+   padding-bottom: 40px;
+   
+}
+
+.list {
+    display: grid;
+    gap: 30px
+}
