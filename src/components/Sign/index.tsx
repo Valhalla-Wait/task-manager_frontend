@@ -50,23 +50,24 @@ export const Sign = () => {
   const formHandler = async (signData: CreateUserInput | LoginInput) => {
     console.log(signData);
     if (signType === 'Sign In') {
-      if (signData.email === 't@t.ru' && signData.password === '123456') {
+      try {
         setError(null);
-        setUser({
-            id: '1',
-            firstName: 'Mikhail',
-            lastName: 'Zaycev',
-            email: signData.email,
-            password: signData.password,
-            isActivated: true,
-            activationLink: 'sdfsdf'
-        })
         await login({
-          email: "ssss@yandex.ru",
-          password: "123456"
+          email:signData.email,
+          password: signData.password
         })
-        push('/');
-      } else {
+        setUser({
+          id: '1',
+          firstName: 'Mikhail',
+          lastName: 'Zaycev',
+          email: signData.email,
+          password: signData.password,
+          isActivated: true,
+          activationLink: 'sdfsdf'
+      })
+      push('/');
+      } catch (e) {
+        console.log(e)
         setError('Uncorrect email or password');
       }
     } else {

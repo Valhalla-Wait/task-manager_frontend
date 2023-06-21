@@ -1,6 +1,6 @@
 import { User } from "core/api/generated_types";
 
 export type AuthContextType = {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: User | undefined;
+  setUser: (user: User | undefined) => void;
 };
