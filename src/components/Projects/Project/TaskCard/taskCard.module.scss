@@ -44,11 +44,39 @@
     white-space: nowrap;
 }
 
+.executor {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .status {
-    background-color: #f5cd99;
+    // background-color: #f5cd99;
     border-radius: 5px;
     padding: 4px 6px;
-    width: fit-content;
+    width: 145px;
     font-size: 14px;
     text-align: center;
+}
+
+.statusSelect{
+    width: 100%;
+    height: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    border-radius: 16px;
+  
+    .option_custom {
+      text-transform: uppercase !important;
+    }
+  
+    .ant-select-selection-item {
+      padding-right: 0px !important;
+      color: grey !important;
+    }
+    .ant-select-arrow {
+      display: none;
+    }
+  
 }

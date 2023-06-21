@@ -17,9 +17,19 @@ export const ProjectAnalytics = () => {
 
     const [usersAnalyticsStatus, setUsersAnalyticsStatus] = useState<TaskStatuses>(TaskStatuses.Completed)
 
+    
+
     const changeAnalyticsStatus: MenuProps['onClick'] = (e) => {
         setUsersAnalyticsStatus(e.key as TaskStatuses);
     };
+
+    const allTasks = {
+        Total: 102,
+        Completed: 50,
+        ['Not completed']: 32,
+        ['In work']: 15,
+        Rejected: 5,
+    }
 
     const menuItems: MenuProps['items'] = [
         {
@@ -114,202 +124,8 @@ export const ProjectAnalytics = () => {
             InWork: 4,
             Rejected: 7,
         },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
-        {
-            name: 'Petya Bogov',
-            Completed: 9,
-            NotCompleted: 6,
-            InWork: 4,
-            Rejected: 7,
-        },
+
+
     ]
 
     const projectData = [
@@ -335,67 +151,39 @@ export const ProjectAnalytics = () => {
         },
     ]
 
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: { cx: number, cy: number, midAngle: number, innerRadius: number, outerRadius: number, percent: number }) => {
+        const RADIAN = Math.PI / 180;
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+        console.log(x, y)
+        return (
+            <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                {`${percent}%`}
+            </text>
+        );
+    };
+
+    const getStatusColor = (status: TaskStatuses) => {
+        switch (status) {
+            case TaskStatuses.Completed:
+                return 'var(--color-light-blue)'
+            case TaskStatuses.NotCompleted:
+                return 'var(--color-light-purple)'
+            case TaskStatuses.InWork:
+                return 'var(--color-light-aqua)'
+            case TaskStatuses.Rejected:
+                return 'var(--color-light-grey)'
+        }
+    }
+
     return (
         <div className={styles.wrapper}>
-            <div className={styles.projectAn}>
-                <div className={styles.projectStat}>
-                    <div className={styles.total}>Total tasks: 80</div>
-                    <div className={styles.completed}>Completed: 50</div>
-                    <div className={styles.notCompleted}>Not completed: 32</div>
-                    <div className={styles.inWork}>In work: 15</div>
-                    <div className={styles.rejected}>Rejected: 5</div>
-                </div>
-                <ResponsiveContainer className={styles.chart}>
-                    
-                    {/* ЗАМЕНИТЬ НА БАРЫ ИЛИ ЕЩЕ ЧТО ТО */}
-
-                    <PieChart>
-                        <Pie
-                            data={projectData}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            outerRadius={80}
-                            fill="#8884d8"
-                            dataKey="percent"
-                            label={({percent, title}) =>{
-                                return `${title}: ${percent}%`
-                            }}
-                            
-                        >
-                            {projectData.map((entry, index) => (
-                                <Cell key={index} name={entry.title} fill={entry.color} />
-                            ))}
-                        </Pie>
-                        <Tooltip/>
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
-            <div className={styles.tasksAn}>
-                <ResponsiveContainer className={styles.chart}>
-                    <AreaChart
-                        data={tasksData}
-                        margin={{
-                            top: 10,
-                            right: 30,
-                            left: 0,
-                            bottom: 0,
-                          }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        {statuses.map((statuse, index) => <Area type='linear' key={index} dataKey={statuse.name} stackId="1" stroke={statuse.color} fill={statuse.color} />)}
-                    </AreaChart>
-                </ResponsiveContainer>
-            </div>
-            <div className={styles.usersAn}>
-                <Menu onClick={changeAnalyticsStatus} selectedKeys={[usersAnalyticsStatus]} mode='horizontal' items={menuItems} />
+            <div className={styles.analytics}>
+                <div className={styles.header}>Tasks</div>
                 <ResponsiveContainer className={styles.chart}>
                     <BarChart
-                        data={usersData}
+                        data={[allTasks]}
                         margin={{
                             top: 10,
                         }}
@@ -405,7 +193,48 @@ export const ProjectAnalytics = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey={usersAnalyticsStatus} fill="var(--color-light-blue)" />
+                        <Bar dataKey={'Completed'} fill="var(--color-light-blue)" />
+                        <Bar dataKey={'Not completed'} fill="var(--color-light-purple)" />
+                        <Bar dataKey={'In work'} fill="var(--color-light-aqua)" />
+                        <Bar dataKey={'Rejected'} fill="var(--color-light-grey)" />
+                        <Bar dataKey={'Total'} fill="darkolivegreen" />
+                    </BarChart>
+
+                </ResponsiveContainer>
+            </div>
+            {/* <div className={styles.tasksAn}>
+                <ResponsiveContainer className={styles.chart}>
+                    <AreaChart
+                        data={tasksData}
+                        margin={{
+                            right: 30,
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        {statuses.map((statuse, index) => <Area type='linear' key={index} dataKey={statuse.name} stackId="1" stroke={statuse.color} fill={statuse.color} />)}
+                    </AreaChart>
+                </ResponsiveContainer>
+            </div> */}
+            <div className={styles.analytics}>
+            <div className={styles.header}>Users</div>
+                <Menu className={styles.analyticsMenu} onClick={changeAnalyticsStatus} selectedKeys={[usersAnalyticsStatus]} mode='horizontal' items={menuItems} />
+                <ResponsiveContainer className={styles.chart}>
+                    <BarChart
+                        data={usersData}
+                        margin={{
+                            right: 30
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey={usersAnalyticsStatus} fill={getStatusColor(usersAnalyticsStatus)} />
                     </BarChart>
 
                 </ResponsiveContainer>

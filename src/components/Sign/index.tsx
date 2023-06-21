@@ -1,6 +1,7 @@
 import { Button, Form } from 'antd';
 import { CreateUserInput, LoginInput } from 'core/api/generated_types';
 import { AuthContext } from 'core/providers/AuthProvider';
+import { authApi } from 'core/store/slice/Auth/api';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import styles from './sign.module.scss';
@@ -13,7 +14,7 @@ export const Sign = () => {
   // const userEmail = useAppSelector(SignInSelectors.signInEmailSelector);
   // const dispatch = useAppDispatch();
   // const [fetch] = useLazyGetUsersQuery();
-  // const [login] = authApi.useLoginMutation();
+  const [login] = authApi.useLoginMutation();
   // const [reg] = authApi.useRegistrationMutation();
   // const [inputData, setInputData] = useState({
   //     email: '',
@@ -46,7 +47,7 @@ export const Sign = () => {
 
   const removeApiError = () => setError(null);
 
-  const formHandler = (signData: CreateUserInput | LoginInput) => {
+  const formHandler = async (signData: CreateUserInput | LoginInput) => {
     console.log(signData);
     if (signType === 'Sign In') {
       if (signData.email === 't@t.ru' && signData.password === '123456') {
@@ -59,6 +60,10 @@ export const Sign = () => {
             password: signData.password,
             isActivated: true,
             activationLink: 'sdfsdf'
+        })
+        await login({
+          email: "ssss@yandex.ru",
+          password: "123456"
         })
         push('/');
       } else {

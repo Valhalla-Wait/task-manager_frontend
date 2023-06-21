@@ -1,34 +1,19 @@
 import { api } from 'core/api/baseApi';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T,
-> = {
-  [_ in K]?: never;
-};
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
-    };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  DateTime: { input: any; output: any };
+  ID: { input: string | number; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type AddUserGroupInput = {
@@ -155,87 +140,113 @@ export type Mutation = {
   removeStatus: Status;
   removeTag: TaskData;
   renameGroup: Group;
+  searchUsers: Array<User>;
   updateProject: Project;
   updateStatus: Status;
   updateTag: TaskData;
   updateTask: TaskData;
 };
 
+
 export type MutationAddLeadInGroupArgs = {
   addLeadInGroup: AddUserGroupInput;
 };
+
 
 export type MutationAddMembersInGroupArgs = {
   addMembersGroupInput: AddUserGroupInput;
 };
 
+
 export type MutationCreateGroupArgs = {
   createGroupInput: CreateGroupInput;
 };
+
 
 export type MutationCreateProjectArgs = {
   createProjectInput: CreateProjectInput;
 };
 
+
 export type MutationCreateStatusArgs = {
   createStatusInput: CreateStatusInput;
 };
+
 
 export type MutationCreateTagArgs = {
   createTagInput: CreateTagInput;
 };
 
+
 export type MutationCreateTaskArgs = {
   createTaskInput: CreateTaskInput;
 };
+
 
 export type MutationCreateUserArgs = {
   createUserInput: CreateUserInput;
 };
 
+
 export type MutationDeleteMembersInGroupArgs = {
   deleteMembersGroupInput: DeleteMembersGroupInput;
 };
+
 
 export type MutationDeleteProjectArgs = {
   deleteProjectInput: Scalars['Float']['input'];
 };
 
+
 export type MutationDeleteTaskArgs = {
   id: Scalars['Int']['input'];
 };
+
 
 export type MutationLoginArgs = {
   loginInput: LoginInput;
 };
 
+
 export type MutationRegistrationArgs = {
   registrationUserInput: RegistrationUserInput;
 };
+
 
 export type MutationRemoveStatusArgs = {
   id: Scalars['Int']['input'];
 };
 
+
 export type MutationRemoveTagArgs = {
   id: Scalars['Int']['input'];
 };
+
 
 export type MutationRenameGroupArgs = {
   renameGroupInput: RenameGroupInput;
 };
 
+
+export type MutationSearchUsersArgs = {
+  searchInput: Scalars['String']['input'];
+};
+
+
 export type MutationUpdateProjectArgs = {
   updateProjectInput: UpdateProjectInput;
 };
+
 
 export type MutationUpdateStatusArgs = {
   updateStatusInput: UpdateStatusInput;
 };
 
+
 export type MutationUpdateTagArgs = {
   updateTagInput: UpdateTagInput;
 };
+
 
 export type MutationUpdateTaskArgs = {
   updateTaskInput: UpdateTaskInput;
@@ -272,65 +283,81 @@ export type Query = {
   usersList: Array<User>;
 };
 
+
 export type QueryGetTagsByTaskIdArgs = {
   taskId: Scalars['Int']['input'];
 };
+
 
 export type QueryGroupByIdArgs = {
   groupId: Scalars['Float']['input'];
 };
 
+
 export type QueryGroupsByProjectIdArgs = {
   projectId: Scalars['Float']['input'];
 };
+
 
 export type QueryLogoutArgs = {
   logoutInput: LogoutInput;
 };
 
+
 export type QueryProjectAnalyticsArgs = {
   projectId: Scalars['Int']['input'];
 };
+
 
 export type QueryProjectAnalyticsByGroupIdArgs = {
   getGroupAnalyticByIdInput: GetGroupAnalyticInput;
 };
 
+
 export type QueryProjectAnalyticsByGroupsArgs = {
   projectId: Scalars['Int']['input'];
 };
+
 
 export type QueryProjectAnalyticsByUsersArgs = {
   projectId: Scalars['Int']['input'];
 };
 
+
 export type QueryProjectAnalyticsGroupByUsersArgs = {
   getGroupAnalyticByIdInput: GetGroupAnalyticInput;
 };
+
 
 export type QueryProjectsListByIdArgs = {
   getProjectByIdInput: Scalars['Float']['input'];
 };
 
+
 export type QueryProjectsListByOwnerIdArgs = {
   getProjectsInput: GetProjectsInput;
 };
+
 
 export type QueryRefreshArgs = {
   refreshInput: RefreshInput;
 };
 
+
 export type QueryStatusArgs = {
   id: Scalars['Int']['input'];
 };
+
 
 export type QueryTagArgs = {
   id: Scalars['Int']['input'];
 };
 
+
 export type QueryTaskByIdArgs = {
   id: Scalars['Int']['input'];
 };
+
 
 export type QueryTasksByProjectIdArgs = {
   projectId: Scalars['Int']['input'];
@@ -481,20 +508,8 @@ export type LoginMutationVariables = Exact<{
   password: Scalars['String']['input'];
 }>;
 
-export type LoginMutation = {
-  __typename?: 'Mutation';
-  login: {
-    __typename?: 'LoginUserData';
-    accessToken: string;
-    user: {
-      __typename?: 'LoginUser';
-      id: string;
-      firstName: string;
-      lastName: string;
-      email: string;
-    };
-  };
-};
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginUserData', accessToken: string, user: { __typename?: 'LoginUser', id: string, firstName: string, lastName: string, email: string } } };
 
 export type RegistrationMutationVariables = Exact<{
   firstName: Scalars['String']['input'];
@@ -503,46 +518,26 @@ export type RegistrationMutationVariables = Exact<{
   password: Scalars['String']['input'];
 }>;
 
-export type RegistrationMutation = {
-  __typename?: 'Mutation';
-  registration: {
-    __typename?: 'RegistratedUserData';
-    accessToken: string;
-    user: {
-      __typename?: 'RegistratedUser';
-      id: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-    };
-  };
-};
 
-export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
+export type RegistrationMutation = { __typename?: 'Mutation', registration: { __typename?: 'RegistratedUserData', accessToken: string, user: { __typename?: 'RegistratedUser', id: string, email: string, firstName: string, lastName: string } } };
 
-export type GetUsersQuery = {
-  __typename?: 'Query';
-  usersList: Array<{
-    __typename?: 'User';
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }>;
-};
+export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCurrentUserQuery = {
-  __typename?: 'Query';
-  getCurrentUser: {
-    __typename?: 'User';
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
-};
+export type GetUsersQuery = { __typename?: 'Query', usersList: Array<{ __typename?: 'User', id: string, firstName: string, lastName: string, email: string }> };
+
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser: { __typename?: 'User', id: string, firstName: string, lastName: string, email: string } };
+
+export type SearchUsersMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+
+export type SearchUsersMutation = { __typename?: 'Mutation', searchUsers: Array<{ __typename?: 'User', id: string, firstName: string, lastName: string, email: string }> };
+
 
 export const LoginDocument = `
     mutation Login($email: String!, $password: String!) {
@@ -592,36 +587,37 @@ export const GetCurrentUserDocument = `
   }
 }
     `;
+export const SearchUsersDocument = `
+    mutation SearchUsers($email: String!) {
+  searchUsers(searchInput: $email) {
+    id
+    firstName
+    lastName
+    email
+  }
+}
+    `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Login: build.mutation<LoginMutation, LoginMutationVariables>({
-      query: (variables) => ({ document: LoginDocument, variables }),
+      query: (variables) => ({ document: LoginDocument, variables })
     }),
-    Registration: build.mutation<
-      RegistrationMutation,
-      RegistrationMutationVariables
-    >({
-      query: (variables) => ({ document: RegistrationDocument, variables }),
+    Registration: build.mutation<RegistrationMutation, RegistrationMutationVariables>({
+      query: (variables) => ({ document: RegistrationDocument, variables })
     }),
     GetUsers: build.query<GetUsersQuery, GetUsersQueryVariables | void>({
-      query: (variables) => ({ document: GetUsersDocument, variables }),
+      query: (variables) => ({ document: GetUsersDocument, variables })
     }),
-    GetCurrentUser: build.query<
-      GetCurrentUserQuery,
-      GetCurrentUserQueryVariables | void
-    >({
-      query: (variables) => ({ document: GetCurrentUserDocument, variables }),
+    GetCurrentUser: build.query<GetCurrentUserQuery, GetCurrentUserQueryVariables | void>({
+      query: (variables) => ({ document: GetCurrentUserDocument, variables })
+    }),
+    SearchUsers: build.mutation<SearchUsersMutation, SearchUsersMutationVariables>({
+      query: (variables) => ({ document: SearchUsersDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const {
-  useLoginMutation,
-  useRegistrationMutation,
-  useGetUsersQuery,
-  useLazyGetUsersQuery,
-  useGetCurrentUserQuery,
-  useLazyGetCurrentUserQuery,
-} = injectedRtkApi;
+export const { useLoginMutation, useRegistrationMutation, useGetUsersQuery, useLazyGetUsersQuery, useGetCurrentUserQuery, useLazyGetCurrentUserQuery, useSearchUsersMutation } = injectedRtkApi;
+

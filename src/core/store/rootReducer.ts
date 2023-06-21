@@ -4,9 +4,11 @@ import { createWrapper } from 'next-redux-wrapper';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 // import { userApi } from './slice/Auth/queries';
 import { signInSlice } from './slice/SignIn/slice';
+import { usersSlice } from './slice/Users/slice';
 
 const rootReducer = combineReducers({
   [signInSlice.name]: signInSlice.reducer,
+  [usersSlice.name]: usersSlice.reducer,
   [api.reducerPath]: api.reducer,
 });
 

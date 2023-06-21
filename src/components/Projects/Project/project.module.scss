@@ -49,9 +49,16 @@
     gap:20px
 }
 
-.projectItemHeader {
+.tasksHeader, .membersHeader {
     font-size: 21px;
     font-weight: bold;
     display: flex;
+}
+
+.membersHeader {
+    justify-content: center;
+}
+
+.tasksHeader {
     justify-content: space-between;
 }

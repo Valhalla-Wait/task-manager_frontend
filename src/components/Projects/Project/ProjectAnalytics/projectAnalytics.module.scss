@@ -12,8 +12,20 @@
    
 }
 
-.tasksAn, .usersAn, .projectAn {
+.analytics {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     box-shadow:  5px 5px 15px rgba(0,0,0,.12);
+    gap:20px;
+    justify-items: center;
+    padding: 25px 0;
+}
+
+.header {
+    // font-family: var();
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.analyticsMenu {
+    justify-content: center;
 }

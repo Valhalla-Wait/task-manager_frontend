@@ -5,7 +5,7 @@ import { graphqlRequestBaseQuery } from './rtkGraphQlQuery';
 export const client = new GraphQLClient('http://localhost:5000/graphql');
 
 export const api = createApi({
-  reducerPath: 'Auth',
+  reducerPath: 'BaseApi',
   baseQuery: graphqlRequestBaseQuery({
     client,
   }),

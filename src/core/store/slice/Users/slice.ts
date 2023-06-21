@@ -2,19 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AuthAction, removeAuthAction } from './actions';
 
 const initialState = {
-  email: '',
-  password: '',
+  data: null,
   isLoading: false,
   error: '',
 };
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const usersSlice = createSlice({
+  name: 'users',
   initialState,
-  reducers: {
-    AuthAction,
-    removeAuthAction,
-  },
+  reducers: {},
   // extraReducers: {
   //   [HYDRATE]: (state, action) => {
   //     return {

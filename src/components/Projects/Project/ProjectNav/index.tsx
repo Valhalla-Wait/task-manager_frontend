@@ -19,7 +19,7 @@ export const ProjectNav = ({setTab, currentTab}:{setTab:MenuProps['onClick'], cu
             key: 'tasks',
         },
         {
-            label: 'Memebers',
+            label: 'Members',
             key: 'members',
         },
         {
