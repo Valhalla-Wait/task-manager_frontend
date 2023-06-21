@@ -53,10 +53,8 @@ query GetCurrentUser {
   }
 }
 
-mutation SearchUsers(
-  $email: String!
-){
-  searchUsers(searchInput: $email){
+mutation SearchUsers($email: String!) {
+  searchUsers(searchInput: $email) {
     id
     firstName
     lastName

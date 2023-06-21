@@ -1,37 +1,37 @@
 .wrapper {
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 30px;
-    display: grid;
-    gap: 20px;
-    cursor: pointer;
-    height: 140px;
-    &:hover{
-        background-color: var(--hover-color);
-        transition: 0.3s;
-    }
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 30px;
+  display: grid;
+  gap: 20px;
+  cursor: pointer;
+  height: 140px;
+  &:hover {
+    background-color: var(--hover-color);
+    transition: 0.3s;
+  }
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .description {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    line-height: 1.3em;
-    height: 3.9em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.3em;
+  height: 3.9em;
 }
 
 .owned {
-    border: 1px solid var(--color-light-purple);
-    border-radius: 10px;
-    padding: 0 7px;
-    background-color: var(--color-light-purple);
-    color: white;
+  border: 1px solid var(--color-light-purple);
+  border-radius: 10px;
+  padding: 0 7px;
+  background-color: var(--color-light-purple);
+  color: white;
 }

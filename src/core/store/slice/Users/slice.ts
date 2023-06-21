@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthAction, removeAuthAction } from './actions';
 
 const initialState = {
   data: null,

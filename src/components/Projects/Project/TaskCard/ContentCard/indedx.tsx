@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 // import {
 //   DescriptionTaskTitle,
 //   StatusWorkSelect,
@@ -18,15 +17,14 @@ import styles from './ContentCard.module.scss';
 //   item: Types.TaskCardType;
 // };
 
-export const ContentCard = (props: any) => {
+export const ContentCard = () => {
   // const {
   //   item: { title, storage_files_meta, progress, tags, status, task_id, priority, created, roles },
   // } = props;
 
-  const dispatch = useDispatch();
   const openModal = () => {
     // dispatch(OneTaskEffects.fetchOneTask(task_id));
-    alert('modal task')
+    alert('modal task');
   };
 
   // const checkRoles = roles.map((el) => ({
@@ -35,8 +33,8 @@ export const ContentCard = (props: any) => {
   //   nameRole: el.task_role.name,
   // }));
   return (
-    <div className={styles.wrapper}> 
-    {/* needSecondRow={!!(progress || storage_files_meta.total)} PROPS */}
+    <div className={styles.wrapper}>
+      {/* needSecondRow={!!(progress || storage_files_meta.total)} PROPS */}
       <div className="col-1">
         <button type="button" onClick={openModal}>
           {/* <DescriptionTaskTitle taskTitle={title} /> */}

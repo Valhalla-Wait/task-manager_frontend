@@ -19,7 +19,7 @@ export const AuthProvider: FC<PropsWithChildren<ComponentWithAuthFields>> = ({
   children,
   Component: { isOnlyAuth },
 }) => {
-  const [user, setUser] = useState<User|null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const { replace } = useRouter();
   useEffect(() => {
     if (isOnlyAuth && !user) replace('/auth');

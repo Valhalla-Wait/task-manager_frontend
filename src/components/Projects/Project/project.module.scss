@@ -1,64 +1,67 @@
 .wrapper {
-    display: grid;
+  display: grid;
 }
 
 .header {
-    // border-left: 1px solid var(--border-color);
-    // border-top: 1px solid var(--border-color);
-    // border-top-left-radius: 8px;
-    // display: flex;
-    // margin-top: 30px;
-    // max-width: 900px;
-    gap: 15px;
-    display: grid;
-    background-color: var(--color-light-grey);
-    // --color-dark-grey100
-    // --color-light-grey
-    justify-items: center;
-    padding: 50px;
+  // border-left: 1px solid var(--border-color);
+  // border-top: 1px solid var(--border-color);
+  // border-top-left-radius: 8px;
+  // display: flex;
+  // margin-top: 30px;
+  // max-width: 900px;
+  gap: 15px;
+  display: grid;
+  background-color: var(--color-light-grey);
+  // --color-dark-grey100
+  // --color-light-grey
+  justify-items: center;
+  padding: 50px;
 }
 
 .title {
-    font-size: 72px;
-    font-family: var(--bebas);
-    font-weight: bold;
+  font-size: 72px;
+  font-family: var(--bebas);
+  font-weight: bold;
 }
 
-.title, .description, .projectItem {
-    max-width: 900px;
-    width: 100%;
+.title,
+.description,
+.projectItem {
+  max-width: 900px;
+  width: 100%;
 }
 
 .description {
-    display: grid;
-    gap: 8px
+  display: grid;
+  gap: 8px;
 }
 
 .descriptionTitle {
-    font-size: 21px;
-    font-weight: bold;
+  font-size: 21px;
+  font-weight: bold;
 }
 .projectItem {
-    display: grid;
-    gap: 20px;
+  display: grid;
+  gap: 20px;
 }
-.projectItems{
-    display: grid;
-    padding: 50px;
-    justify-items: center;
-    gap:20px
+.projectItems {
+  display: grid;
+  padding: 50px;
+  justify-items: center;
+  gap: 20px;
 }
 
-.tasksHeader, .membersHeader {
-    font-size: 21px;
-    font-weight: bold;
-    display: flex;
+.tasksHeader,
+.membersHeader {
+  font-size: 21px;
+  font-weight: bold;
+  display: flex;
 }
 
 .membersHeader {
-    justify-content: center;
+  justify-content: center;
 }
 
 .tasksHeader {
-    justify-content: space-between;
+  justify-content: space-between;
 }

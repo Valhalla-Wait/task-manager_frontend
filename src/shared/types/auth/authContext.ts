@@ -1,4 +1,4 @@
-import { User } from "core/api/generated_types";
+import { User } from 'core/api/generated_types';
 
 export type AuthContextType = {
   user: User | null;

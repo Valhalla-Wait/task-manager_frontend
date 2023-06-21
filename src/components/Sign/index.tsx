@@ -38,7 +38,7 @@ export const Sign = () => {
   //     } catch (error) { }
   // };
 
-  const {setUser} = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext);
   const { push } = useRouter();
   const [signType, setSignType] = useState<SignType>('Sign In');
   const [error, setError] = useState<null | 'Uncorrect email or password'>(
@@ -53,9 +53,9 @@ export const Sign = () => {
       try {
         setError(null);
         await login({
-          email:signData.email,
-          password: signData.password
-        })
+          email: signData.email,
+          password: signData.password,
+        });
         setUser({
           id: '1',
           firstName: 'Mikhail',
@@ -63,11 +63,11 @@ export const Sign = () => {
           email: signData.email,
           password: signData.password,
           isActivated: true,
-          activationLink: 'sdfsdf'
-      })
-      push('/');
+          activationLink: 'sdfsdf',
+        });
+        push('/');
       } catch (e) {
-        console.log(e)
+        console.log(e);
         setError('Uncorrect email or password');
       }
     } else {
