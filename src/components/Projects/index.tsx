@@ -1,4 +1,9 @@
-import { Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
+import {
+  useCreateGroupMutation,
+  useGetCurrentUserQuery,
+} from 'core/api/generated_types';
+import { projectsApi } from 'core/store/slice/porjectsApi';
 import Link from 'next/link';
 import { useState } from 'react';
 import { ProjectCard } from './ProjectCard';
@@ -19,35 +24,21 @@ import styles from './projects.module.scss';
 //   },
 // ];
 
-type ProjectType = {
-  title: string;
-  description: string;
-  usersCount: number;
-  owned: boolean;
-};
-
 export const Projects = () => {
   const [form] = Form.useForm();
   const [showModal, setShowModal] = useState(false);
-  const [projects, setProjects] = useState<ProjectType[]>([
-    {
-      title: 'Project 2',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ducimus fugiat reprehenderit nulla placeat est nisi facere, aperiam officia optio labore amet rem quibusdam, iste veritatis velit! Totam, dolore labore',
-      usersCount: 12,
-      owned: true,
-    },
-    {
-      title: 'Proje32423',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ducimus fugiat reprehenderit nulla placeat est nisi facere, aperiam officia optio labore amet rem quibusdam, iste veritatis velit! Totam, dolore labore',
-      usersCount: 3,
-      owned: false,
-    },
-  ]);
 
-  const createProject = (project: ProjectType) =>
-    setProjects((prev) => [project, ...prev]);
+  const currentUserData = useGetCurrentUserQuery();
+  const currentUserId = Number(currentUserData.data?.getCurrentUser.id);
+  const [createProject, result] = projectsApi.useCreateProjectMutation();
+  const [createGroup] = useCreateGroupMutation();
+  const { data } = projectsApi.useGetProjectsByOwnerIdQuery({
+    ownerId: currentUserId,
+  });
+
+  console.log(data);
+  // const createProject = (project: ProjectType) =>
+  //     setProjects((prev) => [project, ...prev]);
 
   return (
     <div className={styles.wrapper}>
@@ -62,23 +53,42 @@ export const Projects = () => {
       >
         <Form
           form={form}
-          onFinish={(data: { title: string }) => {
-            createProject({
-              title: data.title,
-              usersCount: 0,
-              description: 'sdfsdf',
-              owned: true,
+          onFinish={async (formData: {
+            title: string;
+            description: string;
+          }) => {
+            await createProject({
+              name: formData.title,
+              description: formData.description,
+              ownerId: currentUserId,
             });
+            setTimeout(() => {
+              createGroup({
+                projectId: Number(result.data?.createProject.id),
+                name: 'projectGroup',
+                leadId: currentUserId,
+                membersIds: [],
+                assignedBy: 'Owner',
+              });
+            }, 3000);
             setShowModal((prev) => !prev);
             form.resetFields();
+          }}
+          style={{
+            textAlign: 'center',
           }}
         >
           <Form.Item name="title">
             <Input autoFocus placeholder="Project name" />
           </Form.Item>
-          {/* <Form.Item name="description">
-                        <Input autoFocus placeholder="Project description" />
-                    </Form.Item> */}
+          <Form.Item name="description">
+            <Input placeholder="Project description" />
+          </Form.Item>
+          <Form.Item name="description">
+            <Button type="default" htmlType="submit">
+              Create
+            </Button>
+          </Form.Item>
         </Form>
       </Modal>
       <div className={styles.header}>
@@ -89,9 +99,15 @@ export const Projects = () => {
           + Create Project
         </div>
         <div className={styles.list}>
-          {projects.map((porjectData, index) => (
-            <Link key={index} href={`/project/${index}`}>
-              <ProjectCard key={index} {...porjectData} />
+          {data?.projectsListByOwnerId.map((projectData, index) => (
+            <Link key={index} href={`/project/${projectData.id}`}>
+              <ProjectCard
+                key={index}
+                title={projectData.name}
+                id={Number(projectData.id)}
+                description={projectData.description}
+                owned={projectData.ownerId === currentUserId}
+              />
             </Link>
           ))}
         </div>

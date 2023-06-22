@@ -61,3 +61,274 @@ mutation SearchUsers($email: String!) {
     email
   }
 }
+
+######## PROJECTS ########
+query GetProjectsByOwnerId($ownerId: Int!) {
+  projectsListByOwnerId(getProjectsInput: { ownerId: $ownerId }) {
+    id
+    name
+    description
+    ownerId
+  }
+}
+
+mutation createProject($name: String!, $description: String!, $ownerId: Int!) {
+  createProject(
+    createProjectInput: {
+      name: $name
+      description: $description
+      ownerId: $ownerId
+    }
+  ) {
+    id
+    name
+    description
+    ownerId
+  }
+}
+
+mutation DeleteProject($id: Float!) {
+  deleteProject(deleteProjectInput: $id) {
+    id
+    name
+    description
+    ownerId
+  }
+}
+
+mutation AddMemberInProject($projectId: Int!, $memberId: Int!) {
+  addMemberInProject(
+    addMemberInProjectInput: { projectId: $projectId, memberId: $memberId }
+  ) {
+    id
+    name
+    description
+    ownerId
+  }
+}
+
+mutation DeleteMemberInProject($projectId: Int!, $memberId: Int!) {
+  deleteMemberInProject(
+    deleteMemberInProjectInput: { projectId: $projectId, memberId: $memberId }
+  ) {
+    __typename
+  }
+}
+
+query GetProjectById($id: Float!) {
+  projectsListById(getProjectByIdInput: $id) {
+    id
+    name
+    ownerId
+    description
+    tasks {
+      id
+      name
+      description
+      statusId
+    }
+    members {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+
+#####GROUPS########
+
+mutation CreateGroup(
+  $projectId: Int!
+  $leadId: Int!
+  $name: String!
+  $assignedBy: String!
+  $membersIds: [Int]
+) {
+  createGroup(
+    createGroupInput: {
+      projectId: $projectId
+      leadId: $leadId
+      name: $name
+      assignedBy: $assignedBy
+      membersIds: []
+    }
+  ) {
+    id
+    projectId
+    name
+    lead {
+      firstName
+      lastName
+      id
+      email
+    }
+    members {
+      firstName
+      lastName
+      id
+      email
+    }
+  }
+}
+
+mutation CreateTask(
+  $projectId: Int!
+  $authorId: Int!
+  $name: String!
+  $description: String!
+  $executorIds: [Int!]!
+) {
+  createTask(
+    createTaskInput: {
+      name: $name
+      description: $description
+      authorId: $authorId
+      projectId: $projectId
+      executorIds: $executorIds
+      tagIds: []
+      deadline: "2023-10-22T14:27"
+      groupId: 1
+    }
+  ) {
+    id
+    name
+    description
+    deadline
+    authorId
+    projectId
+    executors {
+      id
+      firstName
+      lastName
+      email
+    }
+    tags {
+      id
+      name
+      color
+    }
+  }
+}
+
+mutation CreateLightTask(
+  $name: String!
+  $description: String!
+  $authorId: Int!
+  $projectId: Int!
+  $executorIds: [Int!]!
+) {
+  createLightTask(
+    createLightTaskInput: {
+      name: $name
+      description: $description
+      deadline: "2023-06-22T15:00:00"
+      authorId: $authorId
+      projectId: $projectId
+      executorIds: $executorIds
+    }
+  ) {
+    id
+    name
+    description
+    deadline
+    authorId
+    projectId
+    executor {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
+
+mutation DeleteLightTask($id: Int!) {
+  deleteLightTask(id: $id) {
+    id
+    name
+    description
+    deadline
+    authorId
+    projectId
+    status
+    executor {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
+
+mutation UpdateLightTask($id: Int!, $statusId: Int!) {
+  updateLightTask(updateLightTaskInput: { id: $id, statusId: $statusId }) {
+    id
+    name
+    description
+    deadline
+    authorId
+    projectId
+    status
+    executor {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
+
+query GetLighTasksByProjectId($projectId: Int!) {
+  getLighTasksByProjectId(projectId: $projectId) {
+    id
+    name
+    description
+    deadline
+    authorId
+    projectId
+    status
+    createdAt
+    executor {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
+
+mutation ChangeTaskStatus($id: Int!, $statusId: Int!) {
+  updateTask(updateTaskInput: { id: $id, statusId: $statusId }) {
+    id
+    name
+    description
+    projectId
+    authorId
+    groupId
+    statusId
+    executors {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
+
+# mutation addExecutorTask(
+#   $id: Int!,
+#   $executorIds: [Int!]!
+# ){
+#   updateTask(updateTaskInput: {
+#     id: $id,
+# 		executorIds: $executorIds
+#   }) {
+#     id
+#     name
+#     description
+#     projectId
+#     authorId
+#     groupId
+#     statusId
+#   }
+# }

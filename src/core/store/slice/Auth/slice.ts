@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthAction, removeAuthAction } from './actions';
+import { AuthState } from './types';
+import { setToken } from './actions';
 
-const initialState = {
-  email: '',
-  password: '',
+const initialState: AuthState = {
+  token: null,
   isLoading: false,
   error: '',
 };
@@ -12,14 +12,13 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    AuthAction,
-    removeAuthAction,
+    setToken,
   },
   // extraReducers: {
   //   [HYDRATE]: (state, action) => {
   //     return {
   //       ...state,
-  //       ...action.payload.signIn,
+  //       ...action.payload.auth,
   //     };
   //   },
   // },

@@ -6,15 +6,15 @@
   gap: 40px;
 }
 .header {
-  max-height: 130px;
-  height: 100%;
-  background-color: var(--color-light-sky);
-  display: flex;
-  align-items: center;
-  min-height: 80px;
+  grid-gap: 15px;
+  gap: 15px;
+  display: grid;
+  background-color: var(--color-light-grey);
+  justify-items: center;
+  padding: 50px;
+  box-shadow: var(--shadow-inset);
 }
 
-.header,
 .listWrapper {
   padding: 0 250px 0 250px;
 }
@@ -22,15 +22,20 @@
 .title {
   font-size: 48px;
   font-family: var(--bebas);
+  width: 100%;
+  max-width: 900px;
 }
 
 .listWrapper {
-  display: flex;
-  align-items: center;
-  padding-bottom: 40px;
+  grid-gap: 15px;
+  display: grid;
+  justify-items: center;
+  padding: 30px;
 }
 
 .list {
   display: grid;
   gap: 30px;
+  max-width: 900px;
+  width: 100%;
 }

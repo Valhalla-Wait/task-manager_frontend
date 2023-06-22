@@ -1,6 +1,10 @@
+import { useAppDispatch } from 'core';
+import { client } from 'core/api/baseApi';
+import { authSlice } from 'core/store/slice/Auth/slice';
 import Head from 'next/head';
 import styles from './mainLayout.module.scss';
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
+  const dispatch = useAppDispatch();
   return (
     <>
       <Head>
@@ -9,7 +13,19 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        <div
+          className={styles.logout}
+          onClick={() => {
+            client.setHeader('authorization', '');
+            localStorage.removeItem('token');
+            dispatch(authSlice.actions.setToken({ token: null }));
+          }}
+        >
+          LogOut
+        </div>
+        {children}
+      </main>
     </>
   );
 };

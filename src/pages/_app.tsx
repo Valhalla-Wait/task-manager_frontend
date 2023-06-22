@@ -11,6 +11,7 @@ const App = ({ Component, ...rest }: TypedApp) => {
   const { store, props } = wrapper.useWrappedStore(rest);
   const { pageProps } = props;
   // const { theme, setTheme } = useTheme()
+
   return (
     <Provider store={store}>
       <AuthProvider Component={Component}>

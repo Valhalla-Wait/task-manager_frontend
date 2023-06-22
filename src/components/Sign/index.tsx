@@ -1,78 +1,73 @@
 import { Button, Form } from 'antd';
-import { CreateUserInput, LoginInput } from 'core/api/generated_types';
+import { api, CreateUserInput, LoginInput } from 'core/api/generated_types';
 import { AuthContext } from 'core/providers/AuthProvider';
-import { authApi } from 'core/store/slice/Auth/api';
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './sign.module.scss';
-import { SignInInputs } from './SignInForm';
-import { SignUpInputs } from './SignUpForm';
+import { SignInInputs } from './SignInInputs';
+import { SignUpInputs } from './SignUpInputs';
 
 type SignType = 'Sign Up' | 'Sign In';
 
 export const Sign = () => {
-  // const userEmail = useAppSelector(SignInSelectors.signInEmailSelector);
+  // const userEmail = useAppSelector(state => state);
   // const dispatch = useAppDispatch();
   // const [fetch] = useLazyGetUsersQuery();
-  const [login] = authApi.useLoginMutation();
-  // const [reg] = authApi.useRegistrationMutation();
-  // const [inputData, setInputData] = useState({
-  //     email: '',
-  //     password: '',
-  // });
-
-  // const handler = async () => {
-  //     try {
-  //         await login({ email: 'ssss@yandex.ru', password: '123456' });
-  //     } catch (error) { }
-  // };
-
-  // const regHandler = async () => {
-  //     try {
-  //         await reg({
-  //             email: 'huhu@yandex.ru',
-  //             password: '123456',
-  //             firstName: 'Hahah',
-  //             lastName: 'hehe',
-  //         });
-  //     } catch (error) { }
-  // };
+  const [login, loginData] = api.useLoginMutation();
+  const [registration, regData] = api.useRegistrationMutation();
 
   const { setUser } = useContext(AuthContext);
   const { push } = useRouter();
   const [signType, setSignType] = useState<SignType>('Sign In');
-  const [error, setError] = useState<null | 'Uncorrect email or password'>(
-    null,
-  );
+  const [authError, setAuthError] = useState<null | string>(null);
 
-  const removeApiError = () => setError(null);
+  useEffect(() => {
+    if (loginData.error?.message) setAuthError(loginData.error.message);
+  }, [loginData.error?.message]);
 
-  const formHandler = async (signData: CreateUserInput | LoginInput) => {
-    console.log(signData);
-    if (signType === 'Sign In') {
-      try {
-        setError(null);
-        await login({
-          email: signData.email,
-          password: signData.password,
-        });
-        setUser({
-          id: '1',
-          firstName: 'Mikhail',
-          lastName: 'Zaycev',
-          email: signData.email,
-          password: signData.password,
-          isActivated: true,
-          activationLink: 'sdfsdf',
-        });
-        push('/');
-      } catch (e) {
-        console.log(e);
-        setError('Uncorrect email or password');
-      }
-    } else {
+  useEffect(() => {
+    if (regData.error?.message) setAuthError(regData.error.message);
+  }, [regData.error?.message]);
+
+  useEffect(() => {
+    if (loginData.data?.login.user) {
+      setUser({
+        ...loginData.data.login.user,
+        isActivated: true,
+      });
       push('/');
     }
+  }, [loginData.data?.login.user]);
+  useEffect(() => {
+    if (regData.data?.registration.user) {
+      const { id, firstName, lastName, email } = regData.data.registration.user;
+      setUser({
+        id,
+        firstName,
+        lastName,
+        email,
+        isActivated: true,
+      });
+      push('/');
+    }
+  }, [regData.data?.registration.user]);
+
+  const removeApiError = () => setAuthError(null);
+
+  const loginHandler = async (signData: LoginInput) => {
+    await login({
+      email: signData.email,
+      password: signData.password,
+    });
+  };
+
+  const regHandler = async (signData: CreateUserInput) => {
+    await registration({
+      firstName: signData?.firstName,
+      lastName: signData?.lastName,
+      email: signData.email,
+      password: signData.password,
+    });
   };
 
   const signTypeHandler = () =>
@@ -85,20 +80,42 @@ export const Sign = () => {
         <Form
           onFocus={removeApiError}
           name={signType}
-          onFinish={formHandler}
+          onFinish={signType === 'Sign In' ? loginHandler : regHandler}
           autoComplete="off"
         >
           {signType === 'Sign Up' ? <SignUpInputs /> : <SignInInputs />}
-          {error && <span style={{ color: 'red' }}>{error}</span>}
+          {authError && <div className={styles.error}>{authError}</div>}
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              loading={loginData.isLoading || regData.isLoading}
+              htmlType="submit"
+            >
               {signType}
             </Button>
           </Form.Item>
-          {signType === 'Sign Up' ? 'Have an account' : 'Have not account'}?
-          <span className={styles.sign_change_btn} onClick={signTypeHandler}>
-            {signType === 'Sign Up' ? 'Sign In' : 'Sign Up'}
-          </span>
+
+          {signType === 'Sign Up' ? (
+            <div>
+              Have an account?{' '}
+              <span
+                className={styles.sign_change_btn}
+                onClick={signTypeHandler}
+              >
+                Sign In
+              </span>
+            </div>
+          ) : (
+            <div>
+              Have not account?{' '}
+              <span
+                className={styles.sign_change_btn}
+                onClick={signTypeHandler}
+              >
+                Sign Up
+              </span>
+            </div>
+          )}
         </Form>
       </div>
     </div>

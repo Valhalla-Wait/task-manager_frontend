@@ -1,54 +1,25 @@
-import { Form, Input, MenuProps, Modal } from 'antd';
+import { Button, Form, Input, MenuProps, Modal, Select } from 'antd';
+import {
+  useGetCurrentUserQuery,
+  useSearchUsersMutation,
+} from 'core/api/generated_types';
+import { projectMembersApi } from 'core/store/slice/projectMembersApi';
+import { lightTasksApi } from 'core/store/slice/lightTasksApi';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styles from './project.module.scss';
 import { ProjectAnalytics } from './ProjectAnalytics';
 import { ProjectNav } from './ProjectNav';
-import { TaskCard, TaskType } from './TaskCard';
+import { TaskCard } from './TaskCard';
 
 type MenuItemsType = 'tasks' | 'members' | 'analytics';
-type UserType = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
+
+const { Option } = Select;
 
 export const Project = () => {
-  const [tasks, setTasks] = useState<TaskType[]>([]);
-  let usersDB = [
-    {
-      firstName: 'Kolya',
-      lastName: 'Blasov',
-      email: 'bbb@yandex.ru',
-    },
-    {
-      firstName: 'Svet',
-      lastName: 'Upov',
-      email: 'rrr@yandex.ru',
-    },
-    {
-      firstName: 'Marine',
-      lastName: 'Polyakov',
-      email: 'eee@yandex.ru',
-    },
-    {
-      firstName: 'Jhon',
-      lastName: 'Wuch',
-      email: 'ccc@yandex.ru',
-    },
-  ];
-  const [users, setUsers] = useState<UserType[]>([
-    {
-      firstName: 'Mikhail',
-      lastName: 'Zaycev',
-      email: 'ttt@yandex.ru',
-    },
-    {
-      firstName: 'Vasya',
-      lastName: 'Popob',
-      email: 'popov@yandex.ru',
-    },
-  ]);
+  const { query } = useRouter();
+  const projectId = Number(query.id);
 
   const [currentTab, setCurrentTab] = useState<MenuItemsType>('tasks');
 
@@ -61,20 +32,37 @@ export const Project = () => {
 
   const [form] = Form.useForm();
 
-  const duplicateTask = (task: TaskType) => {
-    setTasks((prev) => [task, ...prev]);
+  const { data } = projectMembersApi.useGetProjectByIdQuery({ id: projectId });
+
+  // MEMBERS
+  const [addMember] = projectMembersApi.useAddMemberInProjectMutation();
+  const [deleteMember] = projectMembersApi.useDeleteMemberInProjectMutation();
+  const addMemberHandler = async (memberId: number) => {
+    await addMember({ projectId, memberId });
   };
+  const deleteMemberHandler = async (memberId: number) => {
+    await deleteMember({ projectId, memberId });
+  };
+  const [search, searchResult] = useSearchUsersMutation();
+  const filterProjectUsers = searchResult.data
+    ? searchResult.data.searchUsers.filter(
+      (user) =>
+        !data?.projectsListById.members
+          .map((member) => member.id)
+          .includes(user.id),
+    )
+    : [];
 
-  // const seacrhData = useAppSelector(state => state.users.data)
-  // console.log(seacrhData)
+  // TASKS
+  const [createLightTask] = lightTasksApi.useCreateLightTaskMutation();
+  const lighTaskData = lightTasksApi.useGetLighTasksByProjectIdQuery({
+    projectId,
+  });
+  console.log(data);
 
-  // const [search, data] = usersApi.useSearchUsersMutation()
+  //USER
+  const userData = useGetCurrentUserQuery();
 
-  // const searchUsers = async(e:ChangeEvent<HTMLInputElement>) => {
-  //     await search({email: e.currentTarget.value})
-  // }
-
-  const addTask = (task: TaskType) => setTasks((prev) => [task, ...prev]);
   return (
     <div className={styles.wrapper}>
       <Modal
@@ -85,14 +73,25 @@ export const Project = () => {
           setShowAddTasksModal((prev) => !prev);
           form.resetFields();
         }}
+        onOk={() => {
+          form.resetFields();
+        }}
       >
         <Form
           form={form}
-          onFinish={(data: { title: string }) => {
-            addTask({
-              title: data.title,
-              status: 'NEW',
-              description: '',
+          onFinish={({
+            title,
+            description,
+          }: {
+            title: string;
+            description: string;
+          }) => {
+            createLightTask({
+              name: title,
+              description,
+              projectId,
+              authorId: Number(userData.data?.getCurrentUser.id),
+              executorIds: [],
             });
             setShowAddTasksModal((prev) => !prev);
             form.resetFields(['title']);
@@ -100,6 +99,21 @@ export const Project = () => {
         >
           <Form.Item name="title">
             <Input autoFocus placeholder="Task name" />
+          </Form.Item>
+          <Form.Item name="description">
+            <Input autoFocus placeholder="Description" />
+          </Form.Item>
+          <Form.Item name="executor">
+            <Select placeholder="Executor">
+              {data?.projectsListById.members.map((member, index) => (
+                <Option key={index} value={Number(member.id)}>
+                  {member.firstName} {member.lastName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item>
+            <Button htmlType="submit">Create Task</Button>
           </Form.Item>
         </Form>
       </Modal>
@@ -115,26 +129,18 @@ export const Project = () => {
         <Form form={form}>
           <Form.Item name="search">
             <Input
-              onChange={() => console.log('search')}
+              onChange={(e) => search({ email: e.currentTarget.value })}
               autoFocus
-              placeholder="Find member name or email"
+              placeholder="Find member by name or email"
             />
           </Form.Item>
         </Form>
 
         <div className={styles.usersList}>
-          {/* {data.data?.searchUsers.map(user => <div>{user.firstName} {user.lastName} {user.email}</div>)} */}
-          {usersDB.map((user, index) => (
+          {filterProjectUsers.map((user, index) => (
             <div key={index}>
-              {user.firstName} {user.lastName} {user.email}{' '}
-              <button
-                onClick={() => {
-                  setUsers((prev) => [user, ...prev]);
-                  usersDB = [
-                    ...usersDB.filter((user2) => user2.email !== user.email),
-                  ];
-                }}
-              >
+              {user.firstName} {user.lastName} {user.email}
+              <button onClick={() => addMemberHandler(Number(user.id))}>
                 +
               </button>
             </div>
@@ -143,14 +149,11 @@ export const Project = () => {
       </Modal>
       <div className={styles.header}>
         <Link href="/">{'< Мои проекты'}</Link>
-        <div className={styles.title}>V-Planner</div>
+        <div className={styles.title}>{data?.projectsListById.name}</div>
         <div className={styles.description}>
           <div className={styles.descriptionTitle}>About:</div>
           <div className={styles.descriptionText}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate
-            deleniti corporis iste minus neque cupiditate repellat accusantium
-            totam aspernatur expedita consequatur sint doloremque magni, quia
-            corrupti dignissimos nostrum ut eos.
+            {data?.projectsListById.description}
           </div>
         </div>
       </div>
@@ -168,13 +171,15 @@ export const Project = () => {
                   +
                 </div>
               </div>
-              {tasks.map((task, index) => (
+              {lighTaskData.data?.getLighTasksByProjectId.map((task, index) => (
                 <TaskCard
                   key={index}
+                  id={Number(task.id)}
                   status={task.status}
                   description={task.description}
-                  title={task.title}
-                  duplicateTask={() => duplicateTask(task)}
+                  title={task.name}
+                  executor={task.executor[0]}
+                  projectUsers={data?.projectsListById.members}
                 />
               ))}
             </>
@@ -189,7 +194,7 @@ export const Project = () => {
                   +
                 </div>
               </div>
-              {users.map((user, index) => (
+              {data?.projectsListById.members.map((user, index) => (
                 <div
                   style={{
                     display: 'flex',
@@ -199,14 +204,8 @@ export const Project = () => {
                 >
                   <div>{user.firstName}</div>
                   <div>{user.lastName}</div>
-                  <div>{user.email}</div>
-                  <button
-                    onClick={() =>
-                      setUsers((prev) => [
-                        ...prev.filter((user2) => user2.email !== user.email),
-                      ])
-                    }
-                  >
+                  {/* <div>{user.email}</div> */}
+                  <button onClick={() => deleteMemberHandler(Number(user.id))}>
                     -
                   </button>
                 </div>

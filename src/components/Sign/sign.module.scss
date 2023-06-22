@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: 0 25px;
 }
 .sign_form {
   max-width: 400px;
@@ -23,4 +24,9 @@
 .sign_change_btn {
   color: var(--color-dark-sky);
   cursor: pointer;
+}
+
+.error {
+  color: var(--error-text-color);
+  margin-bottom: 24px;
 }

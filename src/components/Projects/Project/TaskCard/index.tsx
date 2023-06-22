@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dropdown, Form, Input, MenuProps, Modal, Select, Space } from 'antd';
 import styles from './taskCard.module.scss';
+import { lightTasksApi } from 'core/store/slice/lightTasksApi';
 
 // const { useDebounce } = Hooks;
 // const { createShowTotal } = Helpers;
@@ -28,7 +29,7 @@ let usersDB = [
   },
 ];
 
-type StatusType =
+export type StatusType =
   | 'IN WORK'
   | 'NEW'
   | 'COMPLETED'
@@ -40,58 +41,61 @@ export type TaskType = {
   status: StatusType;
 };
 
+type Executor = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
 type PropsType = {
+  id: number;
   title: string;
   description: string;
-  status: StatusType;
-  duplicateTask: () => void;
+  status: string;
+  executor: Executor;
+  projectUsers: any;
 };
 
-type SelectStatusType = {
-  value: StatusType;
-  label: StatusType;
-};
-
-const selectOptions: SelectStatusType[] = [
+const selectOptions = [
   {
-    value: 'COMPLETED',
+    name: 'Completed',
+    value: 1,
     label: 'COMPLETED',
   },
   {
-    value: 'NOT COMPLETED',
+    name: 'Not completed',
+    value: 3,
     label: 'NOT COMPLETED',
   },
   {
-    value: 'IN WORK',
+    name: 'In work',
+    value: 2,
     label: 'IN WORK',
   },
   {
-    value: 'NEW',
+    name: 'New',
+    value: 5,
     label: 'NEW',
   },
   {
-    value: 'REJECTED',
+    name: 'Rejected',
+    value: 4,
     label: 'REJECTED',
   },
 ];
 
-type Executor = {
-  firstName: string;
-  lastName: string;
-};
-
-export const TaskCard = ({ title, duplicateTask, status }: PropsType) => {
+export const TaskCard = ({ id, title, status, executor }: PropsType) => {
   // const status = false
 
   // const [pageSize, setPageSize] = useState<number>(3);
   const [showAddExecutorModal, setShowAddExecutorModal] = useState(false);
-  const [executor, setExecutor] = useState<Executor | null>(null);
   // const [currentPage, setCurrentPage] = useState<number>(1);
   // const [currentStatus, setCurrentStatus] = useState<SelectStatusType>({
   //   value: status,
   //   label: status,
   // });
-
+  const [deleteLightTask] = lightTasksApi.useDeleteLightTaskMutation();
+  const [updateLightTask] = lightTasksApi.useUpdateLightTaskMutation();
   const [form] = Form.useForm();
 
   const items: MenuProps['items'] = [
@@ -116,8 +120,10 @@ export const TaskCard = ({ title, duplicateTask, status }: PropsType) => {
     switch (key) {
       case '0':
         setShowAddExecutorModal((prev) => !prev);
-      case '1':
-        duplicateTask();
+      case '3':
+        deleteLightTask({
+          id,
+        });
     }
   };
 
@@ -125,7 +131,7 @@ export const TaskCard = ({ title, duplicateTask, status }: PropsType) => {
     //Easy task version
     <div className={styles.wrapper}>
       <Modal
-        title={'Add new member'}
+        title={'Change executor'}
         open={showAddExecutorModal}
         footer={null}
         onCancel={() => {
@@ -150,7 +156,7 @@ export const TaskCard = ({ title, duplicateTask, status }: PropsType) => {
               {user.firstName} {user.lastName} {user.email}{' '}
               <button
                 onClick={() => {
-                  setExecutor(user);
+                  // setExecutor(user);
                 }}
               >
                 +
@@ -165,11 +171,21 @@ export const TaskCard = ({ title, duplicateTask, status }: PropsType) => {
           className={styles.statusSelect}
           bordered={false}
           labelInValue
+          onChange={(data) =>
+            updateLightTask({
+              id,
+              statusId: data.value as number,
+            })
+          }
+          defaultValue={{
+            value: selectOptions.find((statusOpt) => statusOpt.name === status)
+              ?.value,
+            label: status,
+          }}
           dropdownStyle={{
             width: 'max-content',
           }}
           showArrow={false}
-          defaultValue={{ value: status, label: status }}
           // onChange={setCurrentStatus}
           options={selectOptions}
         />
@@ -177,6 +193,11 @@ export const TaskCard = ({ title, duplicateTask, status }: PropsType) => {
       <div className={styles.date}>12.05 - 14.05</div>
       <div className={styles.executor}>
         {executor && `${executor.firstName} ${executor.lastName}`}
+        {/* <Select
+          defaultValue={<Option value={Number(executor.id)}>{executor.firstName} {executor.lastName}</Option>}
+        >
+          {projectUsers.filter((user:Executor) => user.id !== executor.id).map((member:Executor, index:number) => <Option key={index} value={Number(member.id)}>{member.firstName} {member.lastName}</Option>)}
+        </Select> */}
       </div>
       <div className={styles.edit}>
         <Dropdown menu={{ items, onClick: dropHan }} trigger={['click']}>

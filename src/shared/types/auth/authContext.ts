@@ -1,6 +1,6 @@
-import { User } from 'core/api/generated_types';
+import { LoginUser } from 'core/api/generated_types';
 
 export type AuthContextType = {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: LoginUser | null | undefined;
+  setUser: (user: LoginUser | null | undefined) => void;
 };

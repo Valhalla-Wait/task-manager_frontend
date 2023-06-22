@@ -2,13 +2,13 @@ import { combineReducers, configureStore, Store } from '@reduxjs/toolkit';
 import { api } from 'core/api/generated_types';
 import { createWrapper } from 'next-redux-wrapper';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { authSlice } from './slice/Auth/slice';
 // import { userApi } from './slice/Auth/queries';
-import { signInSlice } from './slice/SignIn/slice';
-import { usersSlice } from './slice/Users/slice';
 
 const rootReducer = combineReducers({
-  [signInSlice.name]: signInSlice.reducer,
-  [usersSlice.name]: usersSlice.reducer,
+  // [signInSlice.name]: signInSlice.reducer,
+  // [usersSlice.name]: usersSlice.reducer,
+  [authSlice.name]: authSlice.reducer,
   [api.reducerPath]: api.reducer,
 });
 
@@ -16,9 +16,7 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      // serializableCheck: false
-    }).concat(api.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 });
 
 const makeStore = () => store;

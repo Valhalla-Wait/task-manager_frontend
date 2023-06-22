@@ -16,6 +16,10 @@
   /* COMMMON COLORS */
   --border-color: #e2e2ea;
   --hover-color: #f7f7f7;
+  --error-text-color: #ff4d4f;
+
+  --shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+  --shadow-inset: 0px 1px 10px -2px inset;
 
   /* FONTS */
   --bebas: 'BebasNeue-Bold';

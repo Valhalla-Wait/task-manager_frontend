@@ -1,7 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
  
 const config: CodegenConfig = {
-  schema: 'http://localhost:5000/graphql',
+  schema: 'https://task-manager-back.up.railway.app/graphql',
   documents: 'src/**/*.graphql',
   generates: {
     'src/core/api/generated_types.ts': {
