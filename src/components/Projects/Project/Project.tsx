@@ -7,11 +7,13 @@ import { projectMembersApi } from 'core/store/slice/projectMembersApi';
 import { lightTasksApi } from 'core/store/slice/lightTasksApi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import styles from './project.module.scss';
 import { ProjectAnalytics } from './ProjectAnalytics';
 import { ProjectNav } from './ProjectNav';
 import { TaskCard } from './TaskCard';
+
+import { Logout } from '../LogOut';
+import { LeftOutlined } from '@ant-design/icons';
 
 type MenuItemsType = 'tasks' | 'members' | 'analytics';
 
@@ -65,6 +67,7 @@ export const Project = () => {
 
   return (
     <div className={styles.wrapper}>
+      <Logout />
       <Modal
         title={'Add new task'}
         open={showAddTasksModal}
@@ -138,9 +141,13 @@ export const Project = () => {
 
         <div className={styles.usersList}>
           {filterProjectUsers.map((user, index) => (
-            <div key={index}>
-              {user.firstName} {user.lastName} {user.email}
-              <button onClick={() => addMemberHandler(Number(user.id))}>
+            <div className={styles.memberSearchItem} key={index}>
+              <div>{user.firstName}</div> <div>{user.lastName}</div>{' '}
+              <div>{user.email}</div>
+              <button
+                className={styles.addMemberBtn}
+                onClick={() => addMemberHandler(Number(user.id))}
+              >
                 +
               </button>
             </div>
@@ -148,7 +155,10 @@ export const Project = () => {
         </div>
       </Modal>
       <div className={styles.header}>
-        <Link href="/">{'< Мои проекты'}</Link>
+        <Link className={styles.backBtn} href="/">
+          <LeftOutlined rev={'myProjects'} />
+          My projects
+        </Link>
         <div className={styles.title}>{data?.projectsListById.name}</div>
         <div className={styles.description}>
           <div className={styles.descriptionTitle}>About:</div>
@@ -163,12 +173,11 @@ export const Project = () => {
           {currentTab === 'tasks' && (
             <>
               <div className={styles.tasksHeader}>
-                <div className={styles.filter}>filter</div>
                 <div
                   onClick={() => setShowAddTasksModal((prev) => !prev)}
                   className={styles.addBtn}
                 >
-                  +
+                  + Add task
                 </div>
               </div>
               {lighTaskData.data?.getLighTasksByProjectId.map((task, index) => (
@@ -191,7 +200,7 @@ export const Project = () => {
                   onClick={() => setShowAddMembersModal((prev) => !prev)}
                   className={styles.addBtn}
                 >
-                  +
+                  + Add member
                 </div>
               </div>
               {data?.projectsListById.members.map((user, index) => (

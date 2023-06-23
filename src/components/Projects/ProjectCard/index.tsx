@@ -1,3 +1,4 @@
+import { DeleteOutlined } from '@ant-design/icons';
 import { projectsApi } from 'core/store/slice/porjectsApi';
 import styles from './projectCard.module.scss';
 
@@ -30,8 +31,15 @@ export const ProjectCard = ({
             id: id,
           });
         }}
+        className={styles.deleteProject}
       >
-        DELETE
+        <DeleteOutlined
+          style={{
+            color: 'red',
+            fontSize: '28px',
+          }}
+          rev={'delete'}
+        />
       </div>
     </div>
   );

@@ -190,7 +190,6 @@ export const TaskCard = ({ id, title, status, executor }: PropsType) => {
           options={selectOptions}
         />
       </div>
-      <div className={styles.date}>12.05 - 14.05</div>
       <div className={styles.executor}>
         {executor && `${executor.firstName} ${executor.lastName}`}
         {/* <Select

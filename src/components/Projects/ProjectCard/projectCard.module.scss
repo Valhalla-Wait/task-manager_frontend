@@ -4,9 +4,10 @@
   display: flex;
   // gap: 20px;
   justify-content: space-between;
-  align-items: baseline;
   cursor: pointer;
   height: 140px;
+  align-items: flex-start;
+
   box-shadow: var(--shadow);
   &:hover {
     background-color: var(--hover-color);
@@ -41,4 +42,11 @@
 .projectContent {
   display: grid;
   gap: 20px;
+}
+
+.deleteProject {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }

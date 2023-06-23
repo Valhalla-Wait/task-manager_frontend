@@ -15,6 +15,14 @@
   box-shadow: var(--shadow-inset);
 }
 
+.createProject {
+  background-color: var(--color-light-blue);
+  padding: 10px;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
 .listWrapper {
   padding: 0 250px 0 250px;
 }
@@ -30,7 +38,7 @@
   grid-gap: 15px;
   display: grid;
   justify-items: center;
-  padding: 30px;
+  padding: 0 30px;
 }
 
 .list {

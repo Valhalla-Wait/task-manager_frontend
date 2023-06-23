@@ -1,13 +1,24 @@
-import { useAppDispatch } from 'core';
-import { client } from 'core/api/baseApi';
+import { useGetCurrentUserQuery } from 'core/api/generated_types';
 import { AuthContext } from 'core/providers/AuthProvider';
-import { authSlice } from 'core/store/slice/Auth/slice';
 import Head from 'next/head';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styles from './mainLayout.module.scss';
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
-  const dispatch = useAppDispatch();
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+  const { data } = useGetCurrentUserQuery();
+
+  useEffect(
+    () =>
+      setUser({
+        id: data?.getCurrentUser.id as string,
+        firstName: data?.getCurrentUser.firstName as string,
+        lastName: data?.getCurrentUser.lastName as string,
+        isActivated: true,
+        email: data?.getCurrentUser.email as string,
+      }),
+    [],
+  );
+  console.log(user);
   return (
     <>
       <Head>
@@ -16,21 +27,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div
-          className={styles.logout}
-          onClick={() => {
-            debugger;
-            client.setHeader('authorization', '');
-            localStorage.removeItem('token');
-            setUser(null);
-            dispatch(authSlice.actions.setToken({ token: null }));
-          }}
-        >
-          LogOut
-        </div>
-        {children}
-      </main>
+      <main className={styles.main}>{children}</main>
     </>
   );
 };

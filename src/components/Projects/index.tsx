@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { ProjectCard } from './ProjectCard';
 import styles from './projects.module.scss';
+import { Logout } from './LogOut';
 
 // const projects = [
 //   {
@@ -24,7 +25,6 @@ import styles from './projects.module.scss';
 export const Projects = () => {
   const [form] = Form.useForm();
   const [showModal, setShowModal] = useState(false);
-
   const currentUserData = useGetCurrentUserQuery();
   const currentUserId = Number(currentUserData.data?.getCurrentUser.id);
   const [createProject] = projectsApi.useCreateProjectMutation();
@@ -38,6 +38,7 @@ export const Projects = () => {
 
   return (
     <div className={styles.wrapper}>
+      <Logout />
       <Modal
         title={'Create project'}
         open={showModal}
@@ -83,7 +84,10 @@ export const Projects = () => {
         <h2 className={styles.title}>My Projects:</h2>
       </div>
       <div className={styles.listWrapper}>
-        <div onClick={() => setShowModal((prev) => !prev)}>
+        <div
+          className={styles.createProject}
+          onClick={() => setShowModal((prev) => !prev)}
+        >
           + Create Project
         </div>
         <div className={styles.list}>
