@@ -1,10 +1,13 @@
 import { useAppDispatch } from 'core';
 import { client } from 'core/api/baseApi';
+import { AuthContext } from 'core/providers/AuthProvider';
 import { authSlice } from 'core/store/slice/Auth/slice';
 import Head from 'next/head';
+import { useContext } from 'react';
 import styles from './mainLayout.module.scss';
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
+  const { setUser } = useContext(AuthContext);
   return (
     <>
       <Head>
@@ -17,8 +20,10 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <div
           className={styles.logout}
           onClick={() => {
+            debugger;
             client.setHeader('authorization', '');
             localStorage.removeItem('token');
+            setUser(null);
             dispatch(authSlice.actions.setToken({ token: null }));
           }}
         >

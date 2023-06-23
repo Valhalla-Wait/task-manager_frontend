@@ -1,6 +1,7 @@
 import { Button, Form } from 'antd';
-import { api, CreateUserInput, LoginInput } from 'core/api/generated_types';
+import { CreateUserInput, LoginInput } from 'core/api/generated_types';
 import { AuthContext } from 'core/providers/AuthProvider';
+import { authApi } from 'core/store/slice/Auth/api';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import styles from './sign.module.scss';
@@ -13,8 +14,8 @@ export const Sign = () => {
   // const userEmail = useAppSelector(state => state);
   // const dispatch = useAppDispatch();
   // const [fetch] = useLazyGetUsersQuery();
-  const [login, loginData] = api.useLoginMutation();
-  const [registration, regData] = api.useRegistrationMutation();
+  const [login, loginData] = authApi.useLoginMutation();
+  const [registration, regData] = authApi.useRegistrationMutation();
 
   const { setUser } = useContext(AuthContext);
   const { push } = useRouter();

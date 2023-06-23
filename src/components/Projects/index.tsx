@@ -1,8 +1,5 @@
 import { Button, Form, Input, Modal } from 'antd';
-import {
-  useCreateGroupMutation,
-  useGetCurrentUserQuery,
-} from 'core/api/generated_types';
+import { useGetCurrentUserQuery } from 'core/api/generated_types';
 import { projectsApi } from 'core/store/slice/porjectsApi';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -30,8 +27,7 @@ export const Projects = () => {
 
   const currentUserData = useGetCurrentUserQuery();
   const currentUserId = Number(currentUserData.data?.getCurrentUser.id);
-  const [createProject, result] = projectsApi.useCreateProjectMutation();
-  const [createGroup] = useCreateGroupMutation();
+  const [createProject] = projectsApi.useCreateProjectMutation();
   const { data } = projectsApi.useGetProjectsByOwnerIdQuery({
     ownerId: currentUserId,
   });
@@ -62,15 +58,7 @@ export const Projects = () => {
               description: formData.description,
               ownerId: currentUserId,
             });
-            setTimeout(() => {
-              createGroup({
-                projectId: Number(result.data?.createProject.id),
-                name: 'projectGroup',
-                leadId: currentUserId,
-                membersIds: [],
-                assignedBy: 'Owner',
-              });
-            }, 3000);
+
             setShowModal((prev) => !prev);
             form.resetFields();
           }}
